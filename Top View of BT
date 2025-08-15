@@ -1,0 +1,30 @@
+void find(Node *root,map<int,int>&mp)
+    {
+        if(root==NULL) return ;
+        queue<pair<Node*,int>>q;
+        q.push({root,0});
+        while(!q.empty())
+        {
+            Node *node=q.front().first;
+            int index = q.front().second;
+            q.pop();
+            if(mp.find(index)==mp.end())
+            {
+                mp[index]=node->data;
+            }
+            if(node->left!=NULL)
+            q.push({node->left,index-1});
+            if(node->right!=NULL)
+            q.push({node->right,index+1});
+        }
+    }
+    vector<int> topView(Node *root) {
+        map<int,int>mp;
+        vector<int>res;
+        find(root,mp);
+        for(auto a:mp)
+        {
+           res.push_back(a.second);
+        }
+        return res;
+    }

@@ -1,0 +1,29 @@
+
+void dfs(Node*root,Node *p,map<int,int>&ans)
+{
+    if(root==NULL)
+    {
+        return ;
+    }
+    if(p!=NULL){
+        ans[root->data]=p->data;
+    }
+    dfs(root->left,root,ans);
+    dfs(root->right,root,ans);
+    
+}
+int kthAncestor(Node *root, int k, int node)
+{
+    map<int,int>anscestor;
+    dfs(root,NULL,anscestor);
+    int par=anscestor[node];
+    for(int i=0;i<k-1;i++)
+    {
+        par=anscestor[par];
+    }
+    if(par==0)
+    {
+        return -1;
+    }
+    return par;
+}

@@ -1,0 +1,28 @@
+// User function Template for C++
+
+class Solution {
+  public:
+    int rodCutting(int ind,vector<int>&price,int len, vector<vector<int>>&dp)
+    {
+        if(ind==0)
+        {
+            return len*price[ind];
+        }
+        if(dp[ind][len]!=-1)
+        {
+            return dp[ind][len];
+        }
+            int not_take=rodCutting(ind-1,price,len,dp);
+            int take=0;
+            if(len>=ind+1)
+            {
+                take=price[ind]+rodCutting(ind,price,len-ind-1,dp);
+            }
+            return dp[ind][len]=max(not_take,take);
+        
+    }
+    int cutRod(vector<int> &price) {
+        vector<vector<int>>dp(price.size(),vector<int>(price.size()+1,-1));
+        return rodCutting(price.size()-1,price,price.size(),dp);
+    }
+};

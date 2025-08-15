@@ -1,0 +1,50 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+void find(int n,vector<char>v,string str,vector<string>&st)
+{
+    if(n==0)
+    {
+        st.push_back(str);
+        return; 
+    }
+    if(n%2!=0)
+    {
+        for(int i=0;i<3;i++)
+        {
+            find(n-1,v,str+v[i],st);
+        }
+      
+    }
+    else
+    {
+        for(int i=0;i<2;i++)
+        {
+            find(n-2,v,v[i]+str+v[i],st);
+        }
+        if(n>2)
+        {
+            find(n-2,v,'0'+str+'0',st);
+        }
+        find(n-2,v,'6'+str+'9',st);
+        find(n-2,v,'9'+str+'6',st);
+    }
+}
+int main() {
+    string str="";
+    int n;
+    cin>>n;
+    vector<string>st;
+    vector<char>v={'1','8','0'};
+   find(n,v,str,st);
+    sort(st.begin(),st.end());
+    for(int i=0;i<st.size();i++)
+    {
+        cout<<st[i]<<" ";
+    }
+    return 0;
+}

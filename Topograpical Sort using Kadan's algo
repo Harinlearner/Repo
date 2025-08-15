@@ -1,0 +1,40 @@
+ bool isCyclic(vector<vector<int>> adj) {
+        vector<int>v;
+        int V=adj.size();
+        vector<int>indegree(V,0);
+        queue<int>q;
+        for(int i=0;i<V;i++)
+        {
+            for(int j:adj[i])
+            {
+                indegree[j]++;
+            }
+        }
+        
+        for(int i=0;i<V;i++)
+        {
+            if(indegree[i]==0){
+                q.push(i);
+                v.push_back(i);
+            }
+        }
+        while(!q.empty())
+        {
+            int node=q.front();
+            q.pop();
+            for(int a:adj[node])
+            {
+                indegree[a]--;
+                if(indegree[a]==0)
+                {
+                    q.push(a);
+                    v.push_back(a);
+                }
+            }
+        }
+        if(V==v.size())
+        {
+            return false;
+        }
+        return true;
+    }

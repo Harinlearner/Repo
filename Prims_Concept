@@ -1,0 +1,65 @@
+#include <cmath>
+#include<bits/stdc++.h>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+void prims(vector<vector<int>>&adj,int v)
+{
+    
+    int visit[v]={false};
+    visit[0]=true;
+    vector<int>vNode;
+    vNode.push_back(0);
+    
+    for(int k=0;k<v-1;k++)
+    {
+        int ni=0,nj=0;
+        int mini=INT_MAX;
+        for(int i=0;i<v;i++) //i=>st,j=>end
+        {
+            if(visit[i])
+            {
+                for(int j=0;j<v;j++)
+                {
+                    if(!visit[j] && adj[i][j]!=0)
+                    {
+                        if(mini>adj[i][j])
+                        {
+                            mini=adj[i][j];
+                            ni=i;
+                            nj=j;
+                        }
+                    }
+                }
+            }
+        }
+        cout<<ni<<" "<<nj<<" "<<mini<<endl;
+        visit[nj]=true;
+    }
+}
+int main() {
+    int v,e;
+    cin>>v>>e;
+   vector<vector<int>>adj(v,vector<int>(v,0));
+    
+    for(int i=0;i<e;i++)
+    {
+        int a,b,w;
+        cin>>a>>b>>w;
+        adj[a][b]=w;
+        adj[b][a]=w;
+    }
+    // for(int i=0;i<v;i++)
+    // {
+    //     for(int j=0;j<v;j++)
+    //     {
+    //         cout<<adj[i][j]<<" ";
+    //     }
+    //     cout<<endl;
+    // }
+    prims(adj,v);
+    return 0;
+}

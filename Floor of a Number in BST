@@ -1,0 +1,25 @@
+// Function to search a node in BST.
+class Solution {
+
+  public:
+    int floor(Node* root, int x) {
+       
+       if(root==NULL)
+       {
+           return -1;
+       }
+       if(root->data==x)
+       {
+           return x;
+       }
+       if(root->data>x)
+        {
+            return floor(root->left,x);
+        }
+        else
+        {
+            return max(root->data,floor(root->right,x));
+        }
+        
+    }
+};

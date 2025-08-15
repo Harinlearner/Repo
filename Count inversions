@@ -1,0 +1,82 @@
+#include <bits/stdc++.h> 
+using namespace std;
+void mergeSort(vector<long long>&arr,int left,int mid,int right,int &count)
+{
+    int n1=mid-left+1;
+    int n2=right-mid;
+    long long la[n1];
+    long long ra[n2];
+    int m=0;
+    int n=0;
+    while(n<n2)
+    {
+        if(m==n1)
+        {
+            m=0;
+            n++;
+            continue;
+        }
+        if(arr[left+m]>arr[mid+n+1])
+        {
+            count+=n1-m;
+            m=0;
+            n++;
+        }
+        else{
+            m++;
+        }
+    }
+    for(int i=0;i<n1;i++)
+    {
+        la[i]=arr[left+i];
+    }
+    for(int j=0;j<n2;j++)
+    {
+        ra[j]=arr[mid+j+1];
+    }
+    int i=0;
+    int j=0;
+    int k=left;
+    while(i<n1 && j<n2)
+    {
+        if(la[i]>=ra[j])
+        {
+            arr[k++]=ra[j++];
+            // count+=(n1-i); alternative
+        }
+        else
+        {
+            arr[k++]=la[i++];
+        }
+    }
+    while(i<n1)
+    {
+            arr[k++]=la[i++];
+
+    }
+    while(j<n2)
+    {
+            arr[k++]=ra[j++];
+    }
+}
+void merge(vector<long long>&arr,int left,int right,int &count)
+{
+    if(left<right)
+    {
+        int mid=(left+right)/2;
+        merge(arr,left,mid,count);
+        merge(arr,mid+1,right,count);
+        mergeSort(arr,left,mid,right,count);
+    }
+}
+long long getInversions(long long *arr, int n){
+    vector<long long>v(arr,arr+n);
+    int count=0;
+   
+    merge(v,0,n-1,count);
+//    for(int a:v)
+//    {
+//        cout<<a<<" ";
+//    }
+    return count;
+}

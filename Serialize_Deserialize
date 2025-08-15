@@ -1,0 +1,88 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Codec {
+public:
+    TreeNode *root=NULL;
+    string str(TreeNode*root)
+    {
+        if(root==NULL) return "";
+        if(root->left==NULL && root->right==NULL)
+        {
+            return to_string(root->val);
+        }
+        return to_string(root->val)+","+str(root->left)+","+str(root->right);
+    }
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        cout<<str(root);
+        return str(root)+",";
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        if(data==",")
+        {
+            return NULL;
+        }
+        root=NULL;
+        for(int i=0;i<data.length();i++)
+        {
+                while(data[i]==',')
+                {
+                    i++;
+                }
+                if(i>=data.length()) break;
+                // cout<<data[i];
+                int num=0;
+                while(data[i]!=','){
+                    num=num*10+(data[i]-'0');
+                    i++;
+                }
+
+                TreeNode* newnode=new TreeNode();
+                newnode->val=num;
+                if(root==NULL)
+                {
+                        root=newnode;
+                }
+                else
+                {
+                    TreeNode *t=root;
+                    while(t->val!=newnode->val)
+                    {
+                        while(t->val>newnode->val && t->left!=NULL)
+                        {
+                            t=t->left;
+                        }
+                        if(t->val>newnode->val && t->left==NULL)
+                        {
+                            t->left=newnode; break;
+                        }
+                        while(t->val<newnode->val && t->right!=NULL)
+                        {
+                            t=t->right;
+                        }
+                        if(t->val<newnode->val && t->right==NULL)
+                        {
+                            t->right=newnode; break;
+                        }
+                    }
+                }
+        }
+        return root;
+    }
+};
+
+// Your Codec object will be instantiated and called as such:
+// Codec* ser = new Codec();
+// Codec* deser = new Codec();
+// string tree = ser->serialize(root);
+// TreeNode* ans = deser->deserialize(tree);
+// return ans;

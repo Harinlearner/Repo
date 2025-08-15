@@ -1,0 +1,46 @@
+#include<bits/stdc++.h>
+using namespace std;
+void djikstra(vector<vector<int>> &adj, vector<int> &dist, vector<bool> &vis, int numVertices, int numEdges) {
+    dist[0] = 0;
+    int node = 0;
+    for(int i = 0; i < numVertices; i++) {
+        int mini = INT_MAX;
+        for(int j = 0; j < numVertices; j++) {
+            if(dist[j] < mini && !vis[j]) {
+                mini = dist[j];
+                node = j;
+            }
+        }
+    
+        for(int j = 0; j < numVertices; j++) {
+            if(!vis[j] && adj[node][j] != 0 && dist[j] > dist[node] + adj[node][j]) {
+                dist[j] = dist[node] + adj[node][j];
+            }
+        }
+        
+        vis[node] = true;
+    }
+    
+    for(int i = 0; i < numVertices; i++) {
+        cout << i << " " << dist[i] << endl;
+    }
+}
+int main() {
+    int numVertices, numEdges;
+    cin >> numVertices >> numEdges;
+    
+    vector<vector<int>> adj(numVertices, vector<int> (numVertices, 0));
+    
+    for(int i = 0; i < numEdges; i++) {
+        int src, dest, weight;
+        cin >> src >> dest >> weight;
+        
+        adj[src][dest] = weight;
+        adj[dest][src] = weight;
+    }
+    
+    vector<int> dist(numVertices, INT_MAX);
+    vector<bool> vis(numVertices, false);
+    
+    djikstra(adj, dist, vis, numVertices, numEdges);
+}

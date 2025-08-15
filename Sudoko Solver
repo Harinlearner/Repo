@@ -1,0 +1,53 @@
+class Solution {
+public:
+    bool back(vector<vector<int>>&rowA,vector<vector<int>>&colA,int box[][3][9],vector<vector<char>>&board,vector<pair<int,int>>&emp,int k)
+    {
+        if(k==emp.size())
+        {
+            return true;
+        }
+        int row=emp[k].first;
+        int col=emp[k].second;
+            for(int num=0;num<9;num++)
+            {
+                if(rowA[row][num]==0 && colA[col][num]==0 && box[row/3][col/3][num]==0 && board[row][col]=='.')
+                {
+                    rowA[row][num]=1;
+                    colA[col][num]=1;
+                    box[row/3][col/3][num]=1;
+                    board[row][col]=(char)(num+'1');
+                    if(back(rowA,colA,box,board,emp,k+1))return true;
+                    rowA[row][num]=0;
+                    colA[col][num]=0;
+                    box[row/3][col/3][num]=0;
+                    board[row][col]='.';
+                }
+            }
+            return false;
+        }
+    void solveSudoku(vector<vector<char>>& board) {
+        vector<vector<int>>row(9,vector<int>(9,0));
+        vector<vector<int>>col(9,vector<int>(9,0));
+        int box[3][3][9]={0};
+        vector<pair<int,int>>emp;
+        int k=0;
+        for(int i=0;i<board.size();i++)
+        {
+            for(int j=0;j<board[0].size();j++)
+            {
+                if(board[i][j]=='.')
+                {
+                    emp.push_back({i,j});
+                }
+                else
+                {
+                    int num=board[i][j]-'1';
+                    row[i][num-1]=1;
+                    col[j][num-1]=1;
+                    box[i/3][j/3][num-1]=1;
+                }
+            }
+        }
+        back(row,col,box,board,emp,k);
+    }
+};

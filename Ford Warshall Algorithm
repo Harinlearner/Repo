@@ -1,0 +1,28 @@
+ void shortestDistance(vector<vector<int>>& mat) {
+          int siz=mat.size();
+        for(int k=0;k<siz;k++)
+        {
+            for(int i=0;i<siz;i++)
+            {
+                for(int j=0;j<siz;j++)
+                {
+                    if(i!=j)
+                    {
+                        if(mat[i][k]!=-1 && mat[k][j]!=-1)
+                        {
+                            if(mat[i][j]==-1)
+                            {
+                                mat[i][j]=mat[i][k]+mat[k][j];
+                            }
+                            else
+                            {
+                                mat[i][j]=min(mat[i][j],mat[i][k]+mat[k][j]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
+};

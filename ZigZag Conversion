@@ -1,0 +1,39 @@
+class Solution {
+public:
+    string convert(string s, int r) {
+        if(r==1)
+        {
+            return s;
+        }
+        string st[r];
+        int flag=1;
+        int k=0;
+        for(int i=0;i<s.length();i++)
+        {
+            if(flag==1)
+            {
+                st[k++]+=s[i];
+            }
+            else
+            {
+                st[k--]+=s[i];
+            }
+            if(k==r)
+            {
+                flag=-1;
+                k-=2;
+            }
+            else if(k==-1)
+            {
+                flag=1;
+                k+=2;
+            }
+        }
+        string str="";
+        for(int i=0;i<r;i++)
+        {
+            str+=st[i];
+        }
+        return str;
+    }
+};

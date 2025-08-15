@@ -1,0 +1,56 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n=in.nextInt();
+        List<ArrayList<Integer>>v=new ArrayList<>();
+        int maxi=Integer.MIN_VALUE;
+        for(int i=0;i<n;i++)
+        {
+            int a=in.nextInt();
+            int b=in.nextInt();
+            maxi=Math.max(maxi,a);
+            ArrayList<Integer>temp=new ArrayList<>();
+            temp.add(a);
+            temp.add(b);
+            v.add(temp);
+            
+        }
+        for(int i=0;i<n;i++)
+        {
+            for(int j=i+1;j<n;j++)
+            {
+                if(v.get(i).get(1)<v.get(j).get(1)){
+                    int t=v.get(i).get(1);
+                    v.get(i).set(1,v.get(j).get(1));
+                    v.get(j).set(1,t);
+                    t=v.get(i).get(0);
+                    v.get(i).set(0,v.get(j).get(0));
+                    v.get(j).set(0,t);
+                }
+            }
+        }
+        int day[]=new int[maxi+1];
+        int sum=0;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=v.get(i).get(0);j>0;j--)
+            {
+                if(day[j]==0)
+                {
+                    day[j]=v.get(i).get(1);
+                    sum+=v.get(i).get(1);
+                    break;
+                }
+            }
+        }
+        System.out.print(sum);
+        
+    }
+}

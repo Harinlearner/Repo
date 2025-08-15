@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int find(int ind,vector<int>&coins,int amt,vector<vector<int>>&dp)
+    {
+        if(ind==0)
+        {
+            if(amt%coins[0]==0)
+            {
+                return amt/coins[0];
+            }
+            return INT_MAX;
+        }
+        if(dp[ind][amt]!=-1)
+        {
+            return dp[ind][amt];
+        }
+        int not_take=find(ind-1,coins,amt,dp);
+        int take=INT_MAX;
+        if(amt>=coins[ind])
+        {
+            int num=find(ind,coins,amt-coins[ind],dp);
+            if(num!=INT_MAX)
+            {
+                take=1+find(ind,coins,amt-coins[ind],dp);
+            }
+        }
+        return dp[ind][amt]=min(take,not_take);
+    }
+    int coinChange(vector<int>& coins, int amount) {
+        vector<vector<int>>dp(coins.size(),vector<int>(amount+1,-1));
+        int res=find(coins.size()-1,coins,amount,dp);
+        if(res==INT_MAX)
+        {
+            return -1;
+        }
+        return res;
+    }
+};

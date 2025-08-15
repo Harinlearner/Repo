@@ -1,0 +1,31 @@
+/* struct Node {
+    int data;
+    struct Node* left;
+    struct Node* right;
+};  */
+void find(Node* root,int &x,int &ceil)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    if(root->data==x)
+    {
+        ceil=root->data;
+        return;
+    }
+    if(root->data<x)
+    {
+        find(root->right,x,ceil);
+    }
+    else
+    {
+        ceil=root->data;
+        find(root->left,x,ceil);
+    }
+}
+int findCeil(Node* root, int input) {
+    int res=-1;
+    find(root,input,res);
+    return res;
+}

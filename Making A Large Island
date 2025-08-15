@@ -1,0 +1,79 @@
+// Best sum for island hashing using islandId generation.
+class Solution {
+public:
+    void dfs(int indi,int indj,vector<vector<int>>&grid,int islandId,int &count)
+    {
+       grid[indi][indj]=islandId;
+        count++;
+        int dr[]={-1,+1,0,0};
+        int dc[]={0,0,+1,-1};
+        for(int i=0;i<4;i++)
+        {
+            int ni=dr[i]+indi;
+            int nj=dc[i]+indj;
+            if(ni>=0 && nj>=0 && ni<grid.size() && nj<grid.size() && grid[ni][nj]==1)
+            {
+                dfs(ni,nj,grid,islandId,count);
+            }
+        }
+    }
+    int largestIsland(vector<vector<int>>& grid) {
+        unordered_map<int,int>mp;
+        int islandId=2;
+        int n=grid.size();
+        int maxi=0;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(grid[i][j]==1)
+                {
+                    int count=0;
+                    dfs(i,j,grid,islandId,count);
+                    // cout<<count;
+                    mp[islandId]=count;
+                    maxi=max(maxi,count);
+                    islandId++;
+                }
+            }
+        }
+        if(maxi==n*n)
+        {
+            return n*n;
+        }
+        // int maxi=0;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(grid[i][j]==0)
+                {
+        vector<bool>vis(islandId,false);
+                    int sizer=0;
+                    int dr[]={-1,+1,0,0};
+                    int dc[]={0,0,+1,-1};
+                    for(int l=0;l<4;l++)
+                    {
+
+                        int ni=dr[l]+i;
+                        int nj=dc[l]+j;
+                        vector<int>v;
+                        if(ni>=0 && nj>=0 && ni<grid.size() && nj<grid.size() && !vis[grid[ni][nj]])
+                        {
+                           sizer+=mp[grid[ni][nj]];
+                            vis[grid[ni][nj]]=true;  
+                        //    mp[grid[ni][nj]]=0;
+                        }
+                    }
+                    maxi=max(maxi,sizer);
+                    
+                }
+            }
+        }
+        // if(maxi==ref)
+        // {
+        //     return maxi;
+        // }
+        return maxi+1;
+    }
+};

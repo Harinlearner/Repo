@@ -1,0 +1,22 @@
+void find(int ind,string digits,vector<vector<char>>v,string res,vector<string>&str)
+    {
+        if(ind==digits.size())
+        {
+            str.push_back(res);
+            return ;
+        }
+        int num=digits[ind]-'0';
+        for(int i=0;i<v[num].size();i++)
+        {
+            string s=res+v[num][i];
+            find(ind+1,digits,v,s,str);
+        }
+
+    }
+    vector<string> letterCombinations(string digits) {
+        if(digits=="") return vector<string>{};
+        vector<string>str;
+        vector<vector<char>>v{{},{},{'a','b','c'},{'d','e','f'},{'g','h','i'},{'j','k','l'},{'m','n','o'},{'p','q','r','s'},{'t','u','v'},{'w','x','y','z'}};
+        find(0,digits,v,"",str);
+        return str;
+    }

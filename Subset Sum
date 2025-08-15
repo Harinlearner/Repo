@@ -1,0 +1,36 @@
+class Solution {
+  public:
+    
+    bool isSubsetSum(vector<int>& arr, int t) {
+        vector<vector<bool>>dp(arr.size(),vector<bool>(t+1,false));
+        for(int ind=0;ind<arr.size();ind++)
+        {
+            for(int target=0;target<=t;target++)
+            {
+                if(target==0)
+                {
+                    dp[ind][target]=true;
+                }
+                else if(ind==0)
+                {
+                    if(target==arr[0])
+                    {
+                        dp[ind][target]=true;
+                    }
+                    else
+                    dp[ind][target]=false;
+                }
+                else
+                {
+                    bool a=false,b=false;
+                    if(target>=arr[ind])
+                        a=dp[ind-1][target-arr[ind]];
+                        
+                    b=dp[ind-1][target];
+                    dp[ind][target]=a||b;
+                }
+            }
+        }
+        return dp[arr.size()-1][t];
+    }
+};

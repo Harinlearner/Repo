@@ -1,0 +1,21 @@
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        map<vector<int>,vector<string>>mp;
+       for(int i=0;i<strs.size();i++)
+       {
+            vector<int>res(26,0);
+            for(char c:strs[i])
+            {
+                res[c-97]++;
+            }
+            mp[res].push_back(strs[i]);
+       }
+        vector<vector<string>>ans;
+        for(auto a:mp)
+        {
+            ans.push_back(a.second);
+        }
+        return ans;
+    }
+};

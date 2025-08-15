@@ -1,0 +1,59 @@
+class Solution {
+public:
+    bool diff(string s1,string s2)
+    {
+        int d=0;
+        for(int i=0;i<s1.length();i++)
+        {
+            if(s1[i]!=s2[i])
+            {
+                d++;
+            }
+            if(d==2)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    int ladderLength(string b, string e, vector<string>& word) {
+        int co=count(word.begin(),word.end(),e);
+        int bco=count(word.begin(),word.end(),b);
+        if(co==0)
+        {
+            return 0;
+        }
+        queue<string>q;
+        int n=word.size();
+        vector<bool>visit(n,false);
+        q.push(b);
+    
+        int c=1;
+        while(!q.empty())
+        {
+            int siz=q.size();
+            while(siz-->0)
+            {
+                string temp=q.front();
+                q.pop();
+                if(temp==e)
+                {
+                   return c;
+                }
+                for(int i=0;i<word.size();i++)
+                {
+                    if(!visit[i])
+                    {
+                        if(diff(word[i],temp))
+                        {
+                            visit[i]=true;
+                            q.push(word[i]);
+                        }
+                    }
+                }
+            }
+            c++;
+        }
+        return 0;
+    }
+};

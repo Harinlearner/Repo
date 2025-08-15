@@ -1,0 +1,50 @@
+// LC-51
+class Solution {
+public:
+    void solve(int col,int n,vector<int>row,vector<int>uDiagonal,vector<int>lDiagonal,vector<string>chess,vector<vector<string>>&res)
+    {
+        if(col==n)
+        {
+            res.push_back(chess);
+            return;
+        }
+        for(int r=0;r<n;r++)
+        {
+            if(row[r]==0 && uDiagonal[r-col+n-1]==0 && lDiagonal[r+col]==0)
+            {
+                row[r]=1;
+                uDiagonal[r-col+n-1]=1;
+                lDiagonal[r+col]=1;
+                chess[r][col]='Q';
+                solve(col+1,n,row,uDiagonal,lDiagonal,chess,res);
+                row[r]=0;
+                uDiagonal[r-col+n-1]=0;
+                lDiagonal[r+col]=0;
+                chess[r][col]='.';
+
+            }
+        }
+    }
+    vector<vector<string>> solveNQueens(int n) {
+        if(n==1)
+        {
+            return vector<vector<string>>{{"Q"}};
+        }
+        vector<string>chess;
+        vector<vector<string>>res;
+        vector<int>row(n,0);
+        vector<int>uDiagonal(2*n-1,0);
+        vector<int>lDiagonal(2*n-1,0);
+        string s="";
+        for(int i=0;i<n;i++)
+        {
+            s+=".";
+        }
+        for(int i=0;i<n;i++)
+        {
+            chess.push_back(s);
+        }
+        solve(0,n,row,uDiagonal,lDiagonal,chess,res);
+        return res;
+    }
+};

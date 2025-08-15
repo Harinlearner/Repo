@@ -1,0 +1,26 @@
+class Solution {
+  public:
+  int findCount(int i,int j,string &s1,vector<vector<int>>&dp)
+    {
+        if(j<=i)
+        {
+            return  dp[i][j]=0;
+        }
+        if(dp[i][j]!=-1)
+        {
+            return dp[i][j];
+        }
+        if(s1[i]==s1[j])
+        {
+            return dp[i][j]=findCount(i+1,j-1,s1,dp);
+        }
+            return dp[i][j]=1+min(findCount(i+1,j,s1,dp),findCount(i,j-1,s1,dp));
+        
+    }
+    int minDeletions(string s) {
+        string s1=s;
+       int n1=s1.length();
+        vector<vector<int>>dp(n1+1,vector<int>(n1+1,-1));
+        return findCount(0,n1-1,s1,dp);
+    }
+};

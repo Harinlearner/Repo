@@ -1,0 +1,27 @@
+// Priority_Queue is used for maintain of the min heap for minimum weight and adding all neigbours
+
+class Solution {
+  public:
+    // Function to find sum of weights of edges of the Minimum Spanning Tree.
+    int spanningTree(int V, vector<vector<int>> adj[]) {
+        vector<bool>vis(V,false);
+        int sum=0;
+       priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
+       pq.push({0,0});
+       while(!pq.empty())
+       {
+          int wt=pq.top().first;
+          int node=pq.top().second;
+          pq.pop();
+          if(vis[node]) continue;
+          vis[node]=true;
+          sum+=wt;
+          for(auto a:adj[node])
+          {
+              pq.push({a[1],a[0]});
+          }
+          
+       }
+       return sum;
+    }
+};

@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+    
+    int n;
+    cin>>n;
+    char a[n];
+    vector<int>pol;
+    vector<int>th;
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+        if(a[i]=='T') th.push_back(i);
+        else pol.push_back(i);
+    }
+    int c=0;
+    int k;
+    cin>>k;
+    int pi=0,ti=0;
+    while(pi<pol.size() && ti<th.size())
+    {
+        if(abs(pol[pi]-th[ti])<=k)
+        {
+            c++;
+            pi++;
+            ti++;
+        }
+        else
+        {
+            if(th[ti]>pol[pi])
+            {
+                pi++;
+            }
+            else
+            ti++;
+        }
+    }
+    cout<<"Maximum thieves caught: "<<c;
+    
+}

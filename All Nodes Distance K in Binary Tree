@@ -1,0 +1,40 @@
+    void findParent(TreeNode *root, unordered_map<int,TreeNode*>&parent)
+    {
+        if(root==NULL)
+        {
+            return ;
+        }
+        if(root->left!=NULL)
+        {
+            parent[root->left->val]=root;
+        }
+        if(root->right!=NULL)
+        {
+            parent[root->right->val]=root;
+        }
+        findParent(root->left,parent);
+        findParent(root->right,parent);
+
+    }
+    void findNodes(TreeNode *target, unordered_map<int,TreeNode*>&parent,int k,vector<int>&res, vector<int>&visit)
+    {   
+        if(target==NULL) return ;
+        if(visit[target->val]==1) return;
+        if(k==0)
+        {
+            res.push_back(target->val);
+            return ;
+        }
+        visit[target->val]=1;
+        findNodes(target->left,parent,k-1,res,visit);
+        findNodes(target->right,parent,k-1,res,visit);
+        findNodes(parent[target->val],parent,k-1,res,visit);
+    }
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        unordered_map<int,TreeNode*>parent;
+        vector<int>visit(501,0);
+        vector<int>res;
+        findParent(root,parent);
+        findNodes(target,parent,k,res,visit);
+        return res;
+    }

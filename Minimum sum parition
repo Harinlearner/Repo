@@ -1,0 +1,46 @@
+class Solution {
+
+  public:
+    int minDifference(vector<int>& arr) {
+        int n = arr.size();
+        int tot=0;
+        for(int i=0;i<arr.size();i++)
+        {
+            tot+=arr[i];
+        }
+        vector<vector<bool>>dp(n,vector<bool>(tot/2+1,0));
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<=tot/2;j++)
+            {
+                if(j==0)
+                {
+                    dp[i][j]=true;
+                }
+                else if(i==0)
+                {
+                    dp[i][j]=(j==arr[0]);
+                }
+                else
+                {
+                    bool not_pick=dp[i-1][j];
+                    bool pick=false;
+                    if(j>=arr[i])
+                    {
+                        pick=dp[i-1][j-arr[i]];
+                    }
+                    dp[i][j]=pick+not_pick;
+                }
+            }
+        }
+        int mini=INT_MAX;
+        for(int i=0;i<=tot/2;i++)
+        {
+            if(dp[n-1][i])
+            {
+                mini=min(mini,abs(tot-(2*i)));
+            }
+        }
+        return mini;
+    }
+};

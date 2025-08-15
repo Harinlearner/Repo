@@ -1,0 +1,54 @@
+// You are using Java
+import java.util.*;
+class Main
+{
+    public static void quickSort(int low,int high,int a[])
+    {
+      
+        
+        int pivot=a[low];
+        int i=low;
+        int j=high;
+          while(i<j)
+            {
+                while(a[i]<=pivot && i<high)
+                {
+                    i++;
+                }
+                while(a[j]>pivot && j>low)
+                {
+                    j--;
+                }
+                if(i<j)
+                {
+                    int t=a[i];
+                    a[i]=a[j];
+                    a[j]=t;
+                }
+            }
+                    int t=a[low];
+                    a[low]=a[j];
+                    a[j]=t;
+        
+        if(low<j) // break when the single element comes from recursion
+            quickSort(low,j-1,a);
+        if(high>j)
+            quickSort(j+1,high,a);
+            
+    }
+    public static void main(String[]args)
+    {
+        Scanner in = new Scanner(System.in);
+        int n=in.nextInt();
+        int a[]=new int[n];
+        for(int i=0;i<n;i++)
+        {
+            a[i]=in.nextInt();
+        }
+        quickSort(0,n-1,a);
+        for(int i=0;i<n;i++)
+        {
+           System.out.print(a[i]+ " ");
+        }
+    }
+}

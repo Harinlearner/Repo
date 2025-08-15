@@ -1,0 +1,20 @@
+class Solution {
+public:
+    pair<int,int> find(TreeNode*root)
+    {
+        if(root==NULL)
+        {
+            return pair<int,int>{0,0};
+        }
+        pair<int,int>a,b;
+        a=find(root->left);
+        b=find(root->right);
+        int withroot=root->val+a.second+b.second;
+        int without=max(b.first,b.second)+max(a.first,a.second);
+        return pair<int,int>{withroot,without};
+    }
+    int rob(TreeNode* root) {
+         pair<int,int>a=find(root);
+         return max(a.first,a.second);
+    }
+};

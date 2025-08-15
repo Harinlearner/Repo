@@ -1,0 +1,32 @@
+class Solution {
+  public:
+    int findCount(int i,int j,string &s1,string &s2,vector<vector<int>>&dp)
+    {
+        if(j==0)
+        {
+            return 1;
+        }
+        if(i==0)
+        {
+            return 0;
+        }
+        if(dp[i][j]!=-1)
+        {
+            return dp[i][j];
+        }
+        int a=0;
+        if(s1[i-1]==s2[j-1])
+        {
+            a=findCount(i-1,j-1,s1,s2,dp);
+        }
+        int b=findCount(i-1,j,s1,s2,dp);
+        return dp[i][j]=(a+b)%1000000007;
+    }
+    int countWays(string s1, string s2) {
+        int n1=s1.length();
+        int n2=s2.length();
+        vector<vector<int>>dp(n1+1,vector<int>(n2+1,-1));
+        return findCount(n1,n2,s1,s2,dp);
+        
+    }
+};

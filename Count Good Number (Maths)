@@ -1,0 +1,29 @@
+class Solution {
+public:  
+    long long power(long long num,long long n)
+    {
+        long long result=1;
+        while(n>0)
+        {
+            if(n%2==1)
+            {
+                result=(result*num)%1000000007;
+            }
+            num=(num*num)%1000000007;
+            n/=2;
+            
+        }
+        return result;
+    }
+    long long countGoodNumbers(long long n) {
+        
+        if(n%2==0)
+        {
+            return (power(5,n/2)*power(4,n/2))%1000000007;
+        }
+        else
+        {
+           return (power(5,n/2+1)*power(4,n/2))%1000000007;
+        }
+    }
+};
