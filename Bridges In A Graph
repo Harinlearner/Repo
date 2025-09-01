@@ -1,0 +1,58 @@
+Eg for clear Understanding
+
+2               5
+| \           / |
+|   \        /  |
+|    3 ---- 4   |
+|   /        \  |
+| /           \ |
+1               6       
+
+
+
+import java.util.*;
+public class Solution {
+    static int timer = 0;
+    public static void dfs(int start,List<List<Integer>>adj,int visit[],int time[],int sTime[],int parent, List<List<Integer>>res)
+    {
+        visit[start]=1;
+        time[start] = sTime[start]=timer++;
+        for(int node : adj.get(start))
+        {
+            if(node==parent)
+            {
+                continue;
+            }
+            if(visit[node]==0)
+            {
+                dfs(node,adj,visit,time,sTime,start,res);
+                sTime[start] = Math.min(sTime[start],sTime[node]);
+                if(sTime[node]>time[start])
+                {
+                    res.add(Arrays.asList(start,node));
+                }
+            }
+            else
+            {
+                sTime[start] = Math.min(sTime[node],sTime[start]);
+            }
+        }
+    }
+    public static List<List<Integer>> findBridges(int[][] edges, int v, int e) {
+       List<List<Integer>> res = new ArrayList<>();
+       List<List<Integer>>adj=new ArrayList<>();
+       for(int i=0;i<v;i++)
+       adj.add(new ArrayList<>());
+
+        for(int a[]:edges)
+        {
+            adj.get(a[0]).add(a[1]);
+            adj.get(a[1]).add(a[0]);
+        }
+       int visit[]=new int[v];
+       int time[] = new int[v];
+       int sTime[] = new int[v];
+       dfs(0,adj,visit,time,sTime,-1,res);
+        return res;
+    }
+}
