@@ -1,0 +1,74 @@
+class Solution {
+   
+    boolean loop(int start,int visit[],List<List<Integer>>adj)
+    {
+        visit[start]=1;
+        for(int a:adj.get(start))
+        {
+            if(visit[a]==0)
+            {
+                if(loop(a,visit,adj)) return true;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        visit[start]=0;
+        return false;
+    }
+    public int[] findOrder(int numCourses, int[][] pre) {
+        
+        int res[]= new int[numCourses];
+         List<List<Integer>> adj = new ArrayList<>();
+        Queue<Integer>q = new LinkedList<>();
+         int isNeed[] = new int [numCourses];
+         for(int i=0;i<numCourses;i++)
+         {
+            adj.add(new ArrayList<>());
+         }
+        int indegree[]=new int[numCourses];
+        for(int i=0;i<pre.length;i++)
+        {
+            adj.get(pre[i][1]).add(pre[i][0]);
+            indegree[pre[i][0]]++;
+        }
+        for(int i=0;i<numCourses;i++)
+        {
+            if(indegree[i]==0)
+            {
+                q.add(i);
+            }
+        }
+        int count = 0;
+        Stack<Integer>st = new Stack<>();
+        int j=0;
+        for(int i=0;i<numCourses;i++){
+                    int visit[]=new int[numCourses];
+                    if(loop(i,visit,adj))
+                    {
+                        return new int[]{};
+                    }
+                    else
+                    {
+                        while(!q.isEmpty())
+                        {
+                            int node = q.poll();
+                            res[j++]=node;
+                            for(int a:adj.get(node))
+                            {
+                                indegree[a]--;
+                                if(indegree[a]==0)
+                                {
+                                    q.add(a);
+                                }
+                            }
+                        }   
+                        
+                    }
+                }   
+        
+       return res;
+
+    }
+}
